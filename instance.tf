@@ -21,11 +21,6 @@ resource "aws_security_group" "allow_ssh" {
   }
 }
 
-resource "aws_iam_instance_profile" "test" {
-  name = "ec2-instance-profile"
-  role = "EC2SSM"
-}
-
 resource "aws_instance" "test" {
   ami                         = data.aws_ami.amazon_linux_2.id
   associate_public_ip_address = true
@@ -33,6 +28,5 @@ resource "aws_instance" "test" {
   subnet_id                   = aws_subnet.private["a"].id
   vpc_security_group_ids      = [aws_security_group.allow_ssh.id]
   # tflint-ignore: aws_instance_invalid_key_name
-  key_name             = "vpgtest1"
-  iam_instance_profile = aws_iam_instance_profile.test.id
+  key_name = "vpgtest1"
 }
