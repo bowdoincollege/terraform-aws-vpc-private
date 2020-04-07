@@ -69,10 +69,6 @@ resource "aws_route_table" "private" {
     transit_gateway_id = local.tgw_id
   }
   route {
-    cidr_block         = "192.168.0.0/16"
-    transit_gateway_id = local.tgw_id
-  }
-  route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.this.id
   }
