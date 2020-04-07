@@ -61,8 +61,20 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.this.id
 
   route {
-    cidr_block         = "0.0.0.0/0"
+    cidr_block         = "139.140.0.0/16"
     transit_gateway_id = local.tgw_id
+  }
+  route {
+    cidr_block         = "10.0.0.0/8"
+    transit_gateway_id = local.tgw_id
+  }
+  route {
+    cidr_block         = "192.168.0.0/16"
+    transit_gateway_id = local.tgw_id
+  }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.this.id
   }
 }
 
@@ -70,4 +82,9 @@ resource "aws_route_table_association" "private" {
   for_each       = { for az in local.azs : az => az }
   subnet_id      = aws_subnet.private[each.key].id
   route_table_id = aws_route_table.private.id
+}
+
+# temp igw for testing
+resource "aws_internet_gateway" "this" {
+  vpc_id = aws_vpc.this.id
 }
