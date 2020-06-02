@@ -18,7 +18,7 @@ data "terraform_remote_state" "cc" {
   config = {
     organization = "bowdoincollege"
     workspaces = {
-      name = "noc-cloudconnect-aws"
+      name = "noc-aws-cloudconnect"
     }
   }
 }
